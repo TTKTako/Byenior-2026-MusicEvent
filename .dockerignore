@@ -1,0 +1,22 @@
+# Source control
+.git
+.gitignore
+
+# Dependencies (re-installed inside container)
+node_modules
+
+# Next.js build artifacts (built inside container)
+.next
+
+# Runtime data (mounted as a Docker volume, not baked in)
+data
+
+# Environment files — passed at runtime via docker-compose env_file,
+# never baked into the image
+.env
+.env.*
+
+# Dev / docs
+README.md
+*.md
+.dockerignore

@@ -108,3 +108,55 @@ body {
   95%  { clip-path: inset(25% 0 35% 0); }
   100% { clip-path: inset(30% 0 40% 0); }
 }
+
+/* ─── Screen text transition ─────────────────────────────────────── */
+@keyframes text-exit {
+  0%   { opacity: 1; transform: translateY(0) scale(1) skewX(0deg); filter: blur(0px); }
+  30%  { opacity: 0.6; transform: translateY(-6px) scale(1.03) skewX(-2deg); filter: blur(1px); }
+  60%  { opacity: 0.15; transform: translateY(-16px) scale(0.97) skewX(3deg); filter: blur(4px); }
+  100% { opacity: 0; transform: translateY(-30px) scale(0.92) skewX(0deg); filter: blur(10px); }
+}
+
+@keyframes text-enter {
+  0%   { opacity: 0; transform: translateY(30px) scale(0.92) skewX(0deg); filter: blur(10px); }
+  40%  { opacity: 0.5; transform: translateY(-4px) scale(1.04) skewX(-2deg); filter: blur(2px); }
+  70%  { opacity: 0.85; transform: translateY(2px) scale(0.99) skewX(1deg); filter: blur(0.5px); }
+  100% { opacity: 1; transform: translateY(0) scale(1) skewX(0deg); filter: blur(0px); }
+}
+
+.text-transition-out {
+  animation: text-exit 0.35s ease-in forwards;
+}
+
+.text-transition-in {
+  animation: text-enter 0.4s ease-out forwards;
+}
+
+/* ─── Join overlay animations ─────────────────────────────────── */
+@keyframes emoji-float {
+  0%   { opacity: 1;    transform: translateY(0)       translateX(0); }
+  20%  { opacity: 0.95; transform: translateY(-20vh)   translateX(var(--emoji-wobble, 20px)); }
+  40%  { opacity: 0.85; transform: translateY(-42vh)   translateX(calc(var(--emoji-wobble, 20px) * -1)); }
+  60%  { opacity: 0.6;  transform: translateY(-62vh)   translateX(calc(var(--emoji-wobble, 20px) * 0.7)); }
+  80%  { opacity: 0.3;  transform: translateY(-82vh)   translateX(calc(var(--emoji-wobble, 20px) * -0.5)); }
+  100% { opacity: 0;    transform: translateY(-100vh)  translateX(0); }
+}
+
+@keyframes text-scroll-ltr {
+  from { transform: translateX(-110vw); }
+  to   { transform: translateX(110vw); }
+}
+
+@keyframes text-scroll-rtl {
+  from { transform: translateX(110vw); }
+  to   { transform: translateX(-110vw); }
+}
+
+@keyframes image-fall {
+  0%   { transform: translateY(-15vh) rotate(var(--img-rot, -8deg));           opacity: 1; }
+  25%  { transform: translateY(20vh)  rotate(calc(var(--img-rot, -8deg) * -1)); }
+  50%  { transform: translateY(55vh)  rotate(var(--img-rot, -8deg)); }
+  75%  { transform: translateY(85vh)  rotate(calc(var(--img-rot, -8deg) * -1)); }
+  80%  { opacity: 1; }
+  100% { transform: translateY(115vh) rotate(var(--img-rot, -8deg));           opacity: 0; }
+}

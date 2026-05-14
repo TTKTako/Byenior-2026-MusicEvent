@@ -1,0 +1,41 @@
+services:
+  # ── Next.js application ──────────────────────────────────────────
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.local          # REMOTE_PASSWORD, GIPHY_API_KEY, etc.
+    volumes:
+      - app-data:/app/data  # Persists SQLite DB and uploaded files
+    restart: unless-stopped
+    networks:
+      - byenior-net
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/api/screen"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
+
+  # ── Cloudflare Tunnel ────────────────────────────────────────────
+  # Exposes the app publicly without opening firewall ports.
+  # Set TUNNEL_TOKEN in .env.local (see README for setup steps).
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    command: tunnel --no-autoupdate run
+    env_file:
+      - .env.local          # cloudflared reads TUNNEL_TOKEN automatically
+    restart: unless-stopped
+    depends_on:
+      app:
+        condition: service_healthy
+    networks:
+      - byenior-net
+
+volumes:
+  app-data:
+
+networks:
+  byenior-net:
+    driver: bridge
