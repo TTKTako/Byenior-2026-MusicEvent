@@ -3,7 +3,7 @@ services:
   app:
     build: .
     ports:
-      - "3000:3000"
+      - "50019:3000"
     env_file:
       - .env.local          # REMOTE_PASSWORD, GIPHY_API_KEY, etc.
     volumes:
@@ -12,7 +12,7 @@ services:
     networks:
       - byenior-net
     healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost:3000/api/screen"]
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/api/screen"]
       interval: 30s
       timeout: 10s
       retries: 5
